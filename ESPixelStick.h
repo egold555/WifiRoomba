@@ -46,6 +46,8 @@ const char BUILD_DATE[] = __DATE__;
 #include <ESPAsyncUDP.h>
 #include <ESPAsyncWebServer.h>
 
+#include <EspSoftwareSerial.h>
+
 #if defined(ESPS_MODE_PIXEL)
 #include "PixelDriver.h"
 #elif defined(ESPS_MODE_SERIAL)
@@ -63,6 +65,8 @@ const char BUILD_DATE[] = __DATE__;
 #define CONNECT_TIMEOUT 15000   /* 15 seconds */
 #define REBOOT_DELAY    100     /* Delay for rebooting once reboot flag is set */
 #define LOG_PORT        Serial  /* Serial port for console logging */
+
+extern SoftwareSerial SwSerial;
 
 /* E1.33 / RDMnet stuff - to be moved to library */
 #define RDMNET_DNSSD_SRV_TYPE   "draft-e133.tcp"

@@ -165,3 +165,34 @@ However, delay the fade out process for 2.5 seconds */
 .form-horizontal .control-label.text-left {
     text-align: left;
 }
+
+/* Roomba drive page */
+.butt, .buttBlank {
+  border: 1px outset blue;
+  background-color: lightBlue;
+  height: 100px;
+  width: 100px;
+  cursor: pointer;
+}
+
+.fa {
+  font-size: 22pt;
+}
+
+.fa-question {
+  /*Needed same width character but invisable*/
+  visibility: hidden;
+}
+
+.butt:hover, .buttBlank:hover {
+  background-color: orange;
+}
+
+.buttBlank {
+  background-color: transparent;
+  cursor: default;
+}
+
+.buttBlank:hover {
+  background-color: transparent;
+}

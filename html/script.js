@@ -170,6 +170,35 @@ $(function() {
         wifiValidation();
     });
 
+    // Roomba drive buttons.
+    $('#driftLeft').click(function() {
+      $.get("/roomba_fwdleft");
+    });
+
+    $('#driftRight').click(function () {
+        $.get("/roomba_fwdright");
+    });
+
+    $('#forward').click(function () {
+        $.get("/roomba_fwd");
+    });
+
+    $('#rotateLeft').click(function () {
+        $.get("/roomba_turnleft");
+    });
+
+    $('#rotateRight').click(function () {
+        $.get("/roomba_turnright");
+    });
+
+    $('#stop').click(function () {
+        $.get("/roomba_stop");
+    });
+
+    $('#backwards').click(function () {
+        $.get("/roomba_reverse");
+    });
+
     canvas = document.getElementById("canvas");
     ctx = canvas.getContext("2d");
     ctx.font = "20px Arial";
