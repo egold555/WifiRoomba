@@ -143,7 +143,7 @@ void initWeb();
 void initRoomba();
 void updateConfig();
 
-enum RoombaCommand { STOP = 1, FORWARDLEFT = 2, FORWARD = 3, FORWARDRIGHT = 4, TURNLEFT = 5, TURNRIGHT = 6, REVERSE = 7 };
+enum RoombaCommand { STOP = 1, FORWARDLEFT = 2, FORWARD = 3, FORWARDRIGHT = 4, TURNLEFT = 5, TURNRIGHT = 6, REVERSE = 7, RESET = 8 };
 
 // Radio config
 RF_PRE_INIT() {
@@ -269,10 +269,13 @@ void setup() {
 /////////////////////////////////////////////////////////
 void initRoomba()
 {
-  SwSerial.begin(115200);
+  SwSerial.begin(57600);
   LOG_PORT.println("\r\n\r\nHello from the NodeMCU.");
   roomba.start();
-  roomba.safeMode();
+  delay(30);
+  roomba.control();
+  delay(30);
+  roomba.fullMode();
   LOG_PORT.println("Roomba initialized.");
 }
 
@@ -300,7 +303,9 @@ void executeRoomba(RoombaCommand command)
     case RoombaCommand::STOP: 
       roomba.drive(0, 0);
       break;
-  }
+    case RoombaCommand::RESET: 
+      initRoomba();
+      break;  }
 }
 
 /////////////////////////////////////////////////////////
@@ -615,6 +620,17 @@ void initWeb() {
         LOG_PORT.println("Driving roomba stop.");
         executeRoomba(RoombaCommand::STOP);
         LOG_PORT.println("Finished driving roomba stop.");
+         
+        response->printf ("OK\r\n");
+        request->send(response);
+    });
+    
+    web.on("/roomba_reset", HTTP_GET, [](AsyncWebServerRequest *request) {
+        AsyncResponseStream *response = request->beginResponseStream("text/plain");
+
+        LOG_PORT.println("Driving roomba reset.");
+        executeRoomba(RoombaCommand::RESET);
+        LOG_PORT.println("Finished driving roomba reset.");
          
         response->printf ("OK\r\n");
         request->send(response);

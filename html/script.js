@@ -199,6 +199,10 @@ $(function() {
         $.get("/roomba_reverse");
     });
 
+    $('#reset').click(function () {
+        $.get("/roomba_reset");
+    });
+
     canvas = document.getElementById("canvas");
     ctx = canvas.getContext("2d");
     ctx.font = "20px Arial";

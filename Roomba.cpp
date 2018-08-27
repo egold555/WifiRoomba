@@ -68,6 +68,11 @@ void Roomba::baud(Baud baud)
     //_serial->begin(_baud);
 }
 
+void Roomba::control()
+{
+  _serial->write(130);
+}
+
 void Roomba::safeMode()
 {
   _serial->write(131);
