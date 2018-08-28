@@ -73,7 +73,16 @@ static void _u0_putc(char c){
 //
 /////////////////////////////////////////////////////////
 
-SoftwareSerial SwSerial(D7, D2);
+/* Baud rate for roomba (yellow: 57600, black: 115200*/
+#define ROOMBA_BAUDRATE 57600  
+/* Roomba transmit/receive pin (only transmit needed for now) */
+/* NodeMCU: RX: D7 TX: D2 */
+/* ESP-01: RX: 5 (not connected) TX: 0 */
+#define ROOMBA_RX_PIN D7
+#define ROOMBA_TX_PIN D2
+
+NullOutput NullPrint;
+SoftwareSerial SwSerial(ROOMBA_RX_PIN, ROOMBA_TX_PIN);
 
 // MQTT State
 const char MQTT_LIGHT_STATE_TOPIC[] = "/light/status";
@@ -144,6 +153,7 @@ void initRoomba();
 void updateConfig();
 
 enum RoombaCommand { STOP = 1, FORWARDLEFT = 2, FORWARD = 3, FORWARDRIGHT = 4, TURNLEFT = 5, TURNRIGHT = 6, REVERSE = 7, RESET = 8 };
+
 
 // Radio config
 RF_PRE_INIT() {
@@ -264,12 +274,13 @@ void setup() {
 
 /////////////////////////////////////////////////////////
 //
-//  Roomba controller
+//  Roomba controller  
 //
 /////////////////////////////////////////////////////////
 void initRoomba()
 {
-  SwSerial.begin(57600);
+  SwSerial.begin(ROOMBA_BAUDRATE);
+  delay(30);
   LOG_PORT.println("\r\n\r\nHello from the NodeMCU.");
   roomba.start();
   delay(30);

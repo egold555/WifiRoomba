@@ -66,7 +66,15 @@ const char BUILD_DATE[] = __DATE__;
 #define REBOOT_DELAY    100     /* Delay for rebooting once reboot flag is set */
 #define LOG_PORT        Serial  /* Serial port for console logging */
 
+class NullOutput: public Print
+{
+public:
+  virtual size_t write(uint8_t) { return 1; }
+  void begin(int baud) {}
+};
+
 extern SoftwareSerial SwSerial;
+extern NullOutput NullPrint;
 
 /* E1.33 / RDMnet stuff - to be moved to library */
 #define RDMNET_DNSSD_SRV_TYPE   "draft-e133.tcp"
